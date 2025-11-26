@@ -29,23 +29,17 @@ public class ArenaCreateCommand extends Command {
             return;
         }
 
-        if (args.length < 5) {
-            player.sendMessage(ChatColor.RED + "Correct usage: /spleef arena create <water|lava> <diameter> <name>");
+        if (args.length < 4) {
+            player.sendMessage(ChatColor.RED + "Correct usage: /spleef arena create <diameter> <name>");
 
             return;
         }
 
-        if (!args[2].equalsIgnoreCase("water") && !args[2].equalsIgnoreCase("lava")) {
-            player.sendMessage(ChatColor.RED + "You must select rising water or lava.");
-
-            return;
-        }
-
-        String type = args[2].toLowerCase();
+        String type = air;
         int diameter;
 
         try {
-            diameter = Integer.parseInt(args[3]);
+            diameter = Integer.parseInt(args[2]);
 
             if (diameter < 20 || diameter > 100) {
                 player.sendMessage(ChatColor.RED + "The diameter of the arena must be a whole number between 20-100.");
@@ -60,13 +54,13 @@ public class ArenaCreateCommand extends Command {
 
         FileManager arena = Spleef.getInstance().getArenas().load();
 
-        if (arena.has("arenas." + args[4])) {
+        if (arena.has("arenas." + args[3])) {
             player.sendMessage(ChatColor.RED + "That arena name is already in use.");
 
             return;
         }
 
-        String name = args[4];
+        String name = args[3];
 
         ArenaWorld world = Spleef.getInstance().getArenaWorld();
 
@@ -114,10 +108,8 @@ public class ArenaCreateCommand extends Command {
 
         List<String> output = new ArrayList<>();
 
-        if (args.length < 3) {
-            output.add("water");
-            output.add("lava");
-        } else if (args.length < 4) {
+
+        if(args.length < 3) {
             output.add("20");
             output.add("25");
             output.add("30");
